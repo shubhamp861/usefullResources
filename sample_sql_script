@@ -16,3 +16,19 @@ INSERT INTO Student_Records VALUES
 (05, 'Yatin', 'Lucknow', 20, 75, 'B1'),  
 (206, 'Ishika', 'Ghaziabad', 19, 51, 'C1'),  
 (207, 'Vivek', 'Goa', 20, 62, 'B2'); 
+
+///////////////////////////////////////////////////////////////////////
+
+CREATE TABLE Employee_Details  
+(  
+Employee_ID INT AUTO_INCREMENT PRIMARY KEY,  
+Emp_Name VARCHAR (50),  
+Emp_City VARCHAR (20),  
+Emp_Salary INT NOT NULL,   
+Emp_Panelty INT NOT NULL  
+) ; 
+
+INSERT INTO Employee_Details (Employee_ID, Emp_Name, Emp_City, Emp_Salary, Emp_Panelty) VALUES (101, 'Anuj', 'Ghaziabad', 25000, 500),  
+(102, 'Tushar', 'Lucknow', 29000, 1000),   
+(103, 'Vivek', 'Kolkata', 35000, 500),  
+(104, 'Shivam', 'Goa', 22000, 500);  
