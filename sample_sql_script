@@ -32,3 +32,8 @@ INSERT INTO Employee_Details (Employee_ID, Emp_Name, Emp_City, Emp_Salary, Emp_P
 (102, 'Tushar', 'Lucknow', 29000, 1000),   
 (103, 'Vivek', 'Kolkata', 35000, 500),  
 (104, 'Shivam', 'Goa', 22000, 500);  
+
+
+
+
+for more sample script # https://www.javatpoint.com/sql-select
