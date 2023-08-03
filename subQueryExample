@@ -1,0 +1,22 @@
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
+int numberOfResults = 10; 
+
+CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+CriteriaQuery<String> subquery = criteriaBuilder.createQuery(String.class);
+Root<TableA1> a1Root = subquery.from(TableA1.class);
+subquery.select(a1Root.get("u"))
+        .where(criteriaBuilder.equal(a1Root.get("a"), yourValue))
+        .orderBy(criteriaBuilder.asc(a1Root.get("some_column")));
+
+CriteriaQuery<TableB1> criteriaQuery = criteriaBuilder.createQuery(TableB1.class);
+Root<TableB1> b1Root = criteriaQuery.from(TableB1.class);
+criteriaQuery.select(b1Root)
+        .where(b1Root.get("u").in(subquery));
+
+List<TableB1> results = entityManager.createQuery(criteriaQuery).getResultList();
