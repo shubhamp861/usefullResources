@@ -1,0 +1,49 @@
+Here's the updated script with error handling:
+```
+bash
+#!/bin/bash
+
+# Define a function to check FIPS status
+check_fips() {
+  # Check if getconf is available
+  if command -v getconf &> /dev/null; then
+    # Use getconf to check FIPS status
+    if getconf -a | grep -qi fips 2>/dev/null; then
+      echo "FIPS is enabled"
+    else
+      echo "Warning: FIPS is not enabled"
+    fi
+  # Check if sysctl is available (e.g., on RHEL-based systems)
+  elif command -v sysctl &> /dev/null; then
+    # Use sysctl to check FIPS status
+    if sysctl -n crypto.fips_enabled 2>/dev/null | grep -qi 1; then
+      echo "FIPS is enabled"
+    else
+      echo "Warning: FIPS is not enabled"
+    fi
+  # Check if fips-mode-setup is available (e.g., on Ubuntu-based systems)
+  elif command -v fips-mode-setup &> /dev/null; then
+    # Use fips-mode-setup to check FIPS status
+    if fips-mode-setup --check 2>/dev/null | grep -qi enabled; then
+      echo "FIPS is enabled"
+    else
+      echo "Warning: FIPS is not enabled"
+    fi
+  else
+    # If none of the above commands are available, print a warning message
+    echo "Warning: Unable to determine FIPS status"
+  fi
+}
+
+# Call the check_fips function with error handling
+if ! check_fips 2>/dev/null; then
+  echo "Unable to get FIPS information"
+fi
+```
+Here's what's changed:
+
+- I added `2>/dev/null` to each command that checks FIPS status, to suppress error messages if the command fails.
+- I added an `if` statement around the call to `check_fips`, to catch any errors that might occur during its execution.
+- If an error occurs, the script prints "Unable to get FIPS information" and continues executing.
+
+With this error handling, the script will not fail if any of the commands to check FIPS status fail, and will instead print a warning message and continue executing.
