@@ -47,3 +47,29 @@ Here's what's changed:
 - If an error occurs, the script prints "Unable to get FIPS information" and continues executing.
 
 With this error handling, the script will not fail if any of the commands to check FIPS status fail, and will instead print a warning message and continue executing.
+±++++++
+@echo off
+setlocal
+
+:: Capture the output of mvn -v
+set "output="
+for /f "tokens=*" %%i in ('mvn -v 2^>^&1') do (
+    set "output=%%i"
+    goto check
+)
+
+:check
+echo %output% | findstr /i "Apache Maven" >nul
+if %errorlevel% equ 0 (
+    echo Maven is installed.
+) else (
+    echo Maven is not installed.
+)
+
+:: Continue with the rest of the script
+echo Continuing with the rest of the script...
+
+:: Example command
+:: Add your additional commands below
+
+pause
