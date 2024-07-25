@@ -73,3 +73,24 @@ echo Continuing with the rest of the script...
 :: Add your additional commands below
 
 pause
+
+
+@echo off
+REM Check if javac is available
+javac -version > NUL 2>&1
+IF %ERRORLEVEL% NEQ 0 (
+    echo JDK is NOT installed.
+) ELSE (
+    FOR /F "tokens=3" %%i IN ('javac -version 2^>^&1 ^| findstr /i "version"') DO SET JDK_VERSION=%%i
+    echo JDK is installed. Version: %JDK_VERSION%
+)
+
+REM Optionally, check JAVA_HOME environment variable
+IF NOT "%JAVA_HOME%"=="" (
+    echo JAVA_HOME is set to: %JAVA_HOME%
+) ELSE (
+    echo JAVA_HOME is NOT set.
+)
+
+REM Pause to keep the window open (optional)
+pause
